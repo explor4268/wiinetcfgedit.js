@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+    <style>
+        *{
+            /*margin:0;
+            padding:0;*/
+            font-family:sans-serif;
+        }
+        label{
+            display:flex;
+            justify-content:space-between;
+        }
+        input{
+            width:150px;
+            font-family:Noto Sans Mono, Cascadia Mono, Menlo, monospace;
+        }
+        .uploadbox,#fileupl{
+            width:100%;
+        }
+        .opt{
+            width:fit-content;
+        }
+        .conn-label{
+            display:block;
+        }
+        .conn-inp{
+            width:50px;
+        }
+        .ipcontainer{
+            justify-content:end;
+        }
+        .ipfield{
+            width:60px;
+        }
+        .flags-root{
+            width:fit-content;
+        }
+        .check{
+            width:auto;
+        }
+        .invalidinput{
+            background-color:#cc9999;
+        }
+        #nojs{
+            border:2px red solid;
+            overflow:hidden;
+        }
+        .nojs-transition{
+            height:0px;
+            transition:height 1s ease-in;
+        }
+    </style>
+    <title>Wii Network Configuration Editor</title>
+</head>
+<body>
+    <p id="nojs">
+    <strong>Loading JavaScript...</strong><br>
+    If you are seeing this, It seems that JavaScript is not executed at all.
+    <noscript><strong>Is JavaScript supported and enabled on your browser?</strong> In order to use this tool, you have to enable JavaScript as the process is done locally in your browser with JavaScript.</noscript>
+    <strong>Is your browser outdated?</strong> Some JavaScript features is not available when using older browsers.<br>
+    If this is an error or bug, open the developer tools in your browser (usually by pressing F12 or right-clicking then inspect element, then go to Console), then copy the error and make a <a>bug report</a>.
+    </p>
+    <h1>Nintendo Wii Network Configuration Editor for Wii System Menu 2.0+</h1>
+    <div class="main-container">
+        <div class="uploadbox">
+            Select the config.dat file obtained from the <code title="Dolphin Emulator's (HLE IOS) NAND is located on your Dolphin Emulator Folder/Wii."><a href="#note-1">NAND</a>/shared2/sys/net/02/config.dat</code>. (file will not be uploaded to the server)<br>
+            <input id="fileupl" type="file" accept=".dat,application/*,video/*">
+        </div>
+        <div class="general-opt opt">
+            <h3>General</h3>
+            <label>Version: <input id="f_version" type="number" min="0" max="4294967295"></label>
+            <label>Valid connections (header4): <input id="f_header4" type="number" min="0" max="255"></label>
+            <label>Unknown (header5): <input id="f_header5" type="number" min="0" max="255"></label>
+            <label>Link timeout seconds: <input id="f_linktimeoutsec" type="number" min="0" max="255"></label>
+        </div>
+        <div class="connection-opt opt">
+            <h3><label class="conn-label">Connection <input id="f_conn" class="conn-inp" type="number" min="1" max="4" value="1"></label></h3>
+            <div class="flags-root">
+                <label><strong>Connection selected:</strong> <input id="connselected" class="check" type="checkbox"></label>
+                <label>Use PMTU Recovery: <input id="pmturec" class="check" type="checkbox"></label>
+                <label><strong>Internet test passed:</strong> <input id="nettestpassed" class="check" type="checkbox"></label>
+                <label>Use Proxy: <input id="useproxy" class="check" type="checkbox"></label>
+                <label>Use PPPoE: <input id="pppoe" class="check" type="checkbox"></label>
+                <label>Use DHCP for IP Address: <input id="dhcpenable" class="check" type="checkbox"></label>
+                <label class="ipcontainer">
+                    Manual IP Address:&nbsp;
+                    <input class="ipfield" id="f_ipaddr1" type="text" value="0">.
+                    <input class="ipfield" id="f_ipaddr2" type="text" value="0">.
+                    <input class="ipfield" id="f_ipaddr3" type="text" value="0">.
+                    <input class="ipfield" id="f_ipaddr4" type="text" value="0">
+                </label>
+                <label class="ipcontainer">
+                    Netmask:&nbsp;
+                    <input class="ipfield" id="f_nipaddr1" type="text" value="0">.
+                    <input class="ipfield" id="f_nipaddr2" type="text" value="0">.
+                    <input class="ipfield" id="f_nipaddr3" type="text" value="0">.
+                    <input class="ipfield" id="f_nipaddr4" type="text" value="0">
+                </label>
+                <label class="ipcontainer">
+                    Gateway:&nbsp;
+                    <input class="ipfield" id="f_gipaddr1" type="text" value="0">.
+                    <input class="ipfield" id="f_gipaddr2" type="text" value="0">.
+                    <input class="ipfield" id="f_gipaddr3" type="text" value="0">.
+                    <input class="ipfield" id="f_gipaddr4" type="text" value="0">
+                </label>
+                <label>Use DHCP for DNS: <input id="dnsdhcpenable" class="check" type="checkbox"></label>
+                <label class="ipcontainer">
+                    DNS IP Address 1:&nbsp;
+                    <input class="ipfield" id="f_dipaddr1" type="text" value="0">.
+                    <input class="ipfield" id="f_dipaddr2" type="text" value="0">.
+                    <input class="ipfield" id="f_dipaddr3" type="text" value="0">.
+                    <input class="ipfield" id="f_dipaddr4" type="text" value="0">
+                </label>
+                <label class="ipcontainer">
+                    DNS IP Address 2:&nbsp;
+                    <input class="ipfield" id="f_d2ipaddr1" type="text" value="0">.
+                    <input class="ipfield" id="f_d2ipaddr2" type="text" value="0">.
+                    <input class="ipfield" id="f_d2ipaddr3" type="text" value="0">.
+                    <input class="ipfield" id="f_d2ipaddr4" type="text" value="0">
+                </label>
+                <label>Use Wired LAN Adapter: <input id="wiredenable" class="check" type="checkbox"></label>
+            </div>
+            <label>MTU (0 or 576-1500): <input id="f_mtu" type="text"></label>
+        </div>
+    </div>
+    <hr>
+    <footer>
+        <p id="note-1">
+        Note 1: Dolphin Emulator's (HLE IOS) NAND is located on your Dolphin Emulator Folder/Wii.
+        </p>
+        <p>
+        This tool can be used to recover from Dolphin Emulator Wii Menu networking "brick" (or known as Error 101232).<sup><a href="https://wiki.dolphin-emu.org/index.php?title=Wii_Menu">[source]</a></sup>
+        </p>
+        <p>
+        Credits: <a href="https://wiibrew.org/wiki//shared2/sys/net/02/config.dat">https://wiibrew.org/wiki//shared2/sys/net/02/config.dat</a><sup><a href="https://web.archive.org/web/20230604122507/https://wiibrew.org/wiki//shared2/sys/net/02/config.dat">[archived]</a></sup>
+        </p>
+        <p>
+        This is an unofficial tool. You are required to modify the Wii's system files (NAND). <strong>This tool is still in development</strong>. I am not responsible for any damages caused by this tool. <a href="license.html">License</a>.
+        </p>
+    </footer>
+    <script src="main.js"></script>
+</body>
+</html>
