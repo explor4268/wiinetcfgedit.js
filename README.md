@@ -3,8 +3,8 @@
 Status: Initial User Interface (No Proxy and Wi-Fi options yet). **No code for editing config.dat yet.**
 
 # TODO
-[ ] actual code
-[ ] hex editing (advanced)
+- [ ] actual code
+- [ ] hex editing (advanced)
 
 # Credits
 
