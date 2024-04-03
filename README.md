@@ -1,4 +1,4 @@
-# [WIP] Wii Network Configuration Editor
+# [WIP] Wii Network Configuration Editor in JavaScript
 
 Status: Initial User Interface (No Proxy and Wi-Fi options yet). **No code for editing config.dat yet.**
 
@@ -9,3 +9,4 @@ Status: Initial User Interface (No Proxy and Wi-Fi options yet). **No code for e
 # Credits
 
 - [https://wiibrew.org/wiki//shared2/sys/net/02/config.dat](https://wiibrew.org/wiki//shared2/sys/net/02/config.dat)
+- [https://github.com/Bazmoc/Wii-Network-Config-Editor](Wii Network Config Editor Homebrew)
