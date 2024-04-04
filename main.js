@@ -1,3 +1,5 @@
+"use strict";
+
 const nonnumregex=/[\D]/g; // non-number regex
 
 // handle IP Address input
@@ -40,6 +42,28 @@ f_mtu.addEventListener("input",function(evt){
         this.value=pint;
     }
 });
+
+function warn(msg){
+    alert(msg);
+}
+
+// Main
+
+let cfgclass;
+
+function handleFileInput(evt){
+    if(fileupl.files.length!==1)return;
+    if(fileupl.files[0].size!==CFG_SIZE){
+        warn(`Not a valid config file. (size must be exactly ${CFG_SIZE} bytes)`)
+    }
+    fileupl.files[0].arrayBuffer().then(abuf=>cfgclass=new WiiNetCfg(abuf));
+}
+
+fileupl.addEventListener("change",handleFileInput)
+createnewbtn.addEventListener("click",function(){
+    cfgclass=new WiiNetCfg(new ArrayByffer(CFG_SIZE));
+});
+
 
 // Hide JavaScript Warning with CSS transition effect.
 

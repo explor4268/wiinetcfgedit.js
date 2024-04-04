@@ -66,8 +66,9 @@
     <h1>[WIP] Nintendo Wii Network Configuration Editor for Wii System Menu 2.0+ in JavaScript</h1>
     <div class="main-container">
         <div class="uploadbox">
-            Select the config.dat file obtained from the <code title="Dolphin Emulator's (HLE IOS) NAND is located on your Dolphin Emulator Folder/Wii."><a href="#note-1">NAND</a>/shared2/sys/net/02/config.dat</code>. (file will not be uploaded to the server)<br>
+            Select the config.dat file obtained from the <code title="Dolphin Emulator's (HLE) NAND is located on your Dolphin Emulator Folder/Wii."><a href="#note-1">NAND</a>/shared2/sys/net/02/config.dat</code>. (file will not be uploaded to the server)<br>
             <input id="fileupl" type="file" accept=".dat,application/*,video/*">
+            <button id="createnewbtn">Create new...</button>
         </div>
         <div class="general-opt opt">
             <h3>General</h3>
@@ -77,7 +78,7 @@
             <label>Link timeout seconds: <input id="f_linktimeoutsec" type="number" min="0" max="255"></label>
         </div>
         <div class="connection-opt opt">
-            <h3><label class="conn-label">Connection <input id="f_conn" class="conn-inp" type="number" min="1" max="4" value="1"></label></h3>
+            <h3><label class="conn-label">Connection <input id="f_conn" class="conn-inp" type="number" min="1" max="3" value="1"></label></h3>
             <div class="flags-root">
                 <label><strong>Connection selected:</strong> <input id="connselected" class="check" type="checkbox"></label>
                 <label>Use PMTU Recovery: <input id="pmturec" class="check" type="checkbox"></label>
@@ -129,7 +130,7 @@
     <hr>
     <footer>
         <p id="note-1">
-        Note 1: Dolphin Emulator's (HLE IOS) NAND is located on your Dolphin Emulator Folder/Wii.
+        Note 1: Dolphin Emulator's (HLE) NAND is located on your Dolphin Emulator Folder/Wii.
         </p>
         <p>
         This tool can be used to recover from Dolphin Emulator Wii Menu networking "brick" (or known as Error 101232).<sup><a href="https://wiki.dolphin-emu.org/index.php?title=Wii_Menu">[source]</a></sup>
@@ -141,6 +142,7 @@
         This is an unofficial tool. You are required to modify the Wii's system files (NAND). <strong>This tool is still in development</strong>. I am not responsible for any damages caused by this tool. <a href="license.html">License</a>.
         </p>
     </footer>
+    <script src="libwiinetcfgedit.js"></script>
     <script src="main.js"></script>
 </body>
 </html>
