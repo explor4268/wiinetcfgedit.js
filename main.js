@@ -43,10 +43,6 @@ f_mtu.addEventListener("input",function(evt){
     }
 });
 
-function warn(msg){
-    alert(msg);
-}
-
 // Main
 
 let cfgclass;
@@ -54,23 +50,36 @@ let cfgclass;
 function handleFileInput(evt){
     if(fileupl.files.length!==1)return;
     if(fileupl.files[0].size!==CFG_SIZE){
-        warn(`Not a valid config file. (size must be exactly ${CFG_SIZE} bytes)`)
+        showError(`Your config file is not a valid config file. (size must be exactly ${CFG_SIZE} bytes, but your file is ${fileupl.files[0].size} bytes)`)
+        return;
     }
     fileupl.files[0].arrayBuffer().then(abuf=>cfgclass=new WiiNetCfg(abuf));
 }
 
-fileupl.addEventListener("change",handleFileInput)
-createnewbtn.addEventListener("click",function(){
-    cfgclass=new WiiNetCfg(new ArrayByffer(CFG_SIZE));
-});
+function createBlankCfg(){
+    if(cfgclass===undefined||confirm("Are you sure to create a new config file? All unsaved changes will be lost.")){
+        cfgclass=new WiiNetCfg(new ArrayBuffer(CFG_SIZE));
+    }
+}
 
+fileupl.addEventListener("change",handleFileInput);
+createnewbtn.addEventListener("click",createBlankCfg);
+
+function downloadConfig(){
+    let blob=cfgclass.toBlob();
+    let dllink=document.createElement("a");
+    dllink.href=URL.createObjectURL(blob);
+    dllink.download="config.dat";
+    dllink.click();
+}
+
+dlbtn.addEventListener("click",downloadConfig);
 
 // Hide JavaScript Warning with CSS transition effect.
 
-nojs.style.height=(nojs.offsetHeight-4)+"px";
+nojs.style.height=nojs.scrollHeight+"px";
 nojs.classList.add("nojs-transition");
 setTimeout(()=>{nojs.style.height="0px";},0);
 setTimeout(()=>{
     nojs.style.display="none";
-    nojs.style.border="none";
 },1100);

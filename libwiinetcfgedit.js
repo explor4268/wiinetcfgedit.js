@@ -100,7 +100,7 @@ function generateMapping(mapping,cbyteoffset=0,existingMapping){
             for(let j=0;j<currentry[2];j++){
                 let prfx=currentry[2]>1?(j+1).toString():"";
                 let res=generateMapping(mappings[currentry[0]],cbyteoffset,finalMapping[currentry[0]]);
-                finalMapping[currentry[0]+prfx]=res[0];
+                finalMapping[(currentry[0]+prfx).replace('mapping_','')]=res[0];
                 cbyteoffset=res[1];
             }
             continue;
@@ -124,7 +124,7 @@ function generateMapping(mapping,cbyteoffset=0,existingMapping){
     return [finalMapping,cbyteoffset];
 }
 const finalMappingResult=generateMapping(mappings.mapping_header);
-console.log(...finalMappingResult);
+console.log('Here are the mappings if you are curious.\nFormat: fieldname:[[byteoffsets,...],datatype,count]',...finalMappingResult,"bytes in total.",CFG_SIZE===finalMappingResult[1]?'(PASSED)':'(NOT PASSED)');
 const master_mappings=finalMappingResult[0];
 
 /*
@@ -151,17 +151,41 @@ processOffset(mappings.mapping_header);*/
 
 class WiiNetCfg{
     constructor(abuf){
+        if(abuf.byteLength!==CFG_SIZE){
+            let emsg=`[bug] At WiiNetCfg constructor: ArrayBuffer argument is not a valid config file. (size must be exactly ${CFG_SIZE} bytes, but the input is ${abuf.byteLength} bytes)`;
+            showError(emsg);
+            throw new Error(emsg);
+        }
         this.arraybuf=abuf;
         this.dview=new DataView(this.arraybuf);
     }
     setValue(name,value){
-        let cmap=master_mappings[name];
+        let splitnames=name.split('_'),splitnameslen=splitnames.length;
+        let cmap=master_mappings;
+        for(let i=0;i<splitnameslen;i++){
+            cmap=cmap[splitnames.shift()];
+        }
         for(let offset of cmap[0]){
-            this.dview['set'+cmap[1]](offset,value,true); // make sure for little endian
+            for(let i=0;i<cmap[2];i++){
+                if(value[i]===undefined)continue; // probably gonna change this behavior.
+                this.dview['set'+cmap[1]](offset+i,value[i],true); // make sure for little endianess.
+            }
         }
     }
     getValue(name){
-        let cmap=master_mappings[name];
-        return this.dview['get'+cmap[1]](cmap[0][0],true); // take the first of duplicate on mapping_proxy (because mapping_proxy is duplicated)
+        let splitnames=name.split('_'),splitnameslen=splitnames.length;
+        let cmap=master_mappings;
+        for(let i=0;i<splitnameslen;i++){
+            cmap=cmap[splitnames.shift()];
+        }
+        let ret=[];
+        for(let i=0;i<cmap[2];i++){
+            ret.push(this.dview['get'+cmap[1]](cmap[0][0]+i,true));
+            // take only the first of duplicate on mapping_proxy (because mapping_proxy is duplicated)
+        }
+        return ret;
+    }
+    toBlob(){
+        return new Blob([this.arraybuf],{type:'application/octet-stream'});
     }
 }

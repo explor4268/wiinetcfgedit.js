@@ -52,17 +52,22 @@
             height:0px;
             transition:height 1s ease-in;
         }
+        #errorp{
+            margin:0;
+        }
     </style>
     <title>Wii Network Configuration Editor</title>
 </head>
 <body>
-    <p id="nojs">
-    <strong>Loading JavaScript...</strong><br>
-    If you are seeing this, It seems that JavaScript is not executed at all.
-    <noscript><strong>Is JavaScript supported and enabled on your browser?</strong> In order to use this tool, you have to enable JavaScript as the process is done locally in your browser with JavaScript.</noscript>
-    <strong>Is your browser outdated?</strong> Some JavaScript features is not available when using older browsers.<br>
-    If this is an error or bug, open the developer tools in your browser (usually by pressing F12 or right-clicking then inspect element, then go to Console), then copy the error and make a <a href="https://github.com/explor4268/wiinetcfgedit.js">bug report</a>.
-    </p>
+    <div id="nojs">
+        <p id="errorp">
+            <strong>Loading JavaScript...</strong><br>
+            If you are seeing this, It seems that JavaScript is not executed at all.
+            <noscript><strong>Is JavaScript supported and enabled on your browser?</strong> In order to use this tool, you have to enable JavaScript as the process is done locally in your browser with JavaScript.</noscript>
+            <strong>Is your browser outdated?</strong> Some JavaScript features is not available when using older browsers.<br>
+        </p>
+        If this is an error caused by a bug, copy the error above, or open the developer tools in your browser (usually by pressing F12 or right-clicking then inspect element, then go to Console), then copy the error and make a <a href="https://github.com/explor4268/wiinetcfgedit.js/issues">bug report</a>.
+    </div>
     <h1>[WIP] Nintendo Wii Network Configuration Editor for Wii System Menu 2.0+ in JavaScript</h1>
     <div class="main-container">
         <div class="uploadbox">
@@ -126,6 +131,7 @@
             </div>
             <label>MTU (0 or 576-1500): <input id="f_mtu" type="text"></label>
         </div>
+        <button id="dlbtn">Download config.dat</button>
     </div>
     <hr>
     <footer>
@@ -139,9 +145,40 @@
         Credits: <a href="https://wiibrew.org/wiki//shared2/sys/net/02/config.dat">https://wiibrew.org/wiki//shared2/sys/net/02/config.dat</a><sup><a href="https://web.archive.org/web/20230604122507/https://wiibrew.org/wiki//shared2/sys/net/02/config.dat">[archived]</a></sup>
         </p>
         <p>
-        This is an unofficial tool. You are required to modify the Wii's system files (NAND). <strong>This tool is still in development</strong>. I am not responsible for any damages caused by this tool. <a href="license.html">License</a>.
+        This is an unofficial tool. You are required to modify the Wii's system files (NAND). <strong>This tool is still in development</strong>. I am not responsible for any damages caused by this tool. <a href="LICENSE">Licensed under the MIT License</a>.
         </p>
     </footer>
+    <script>
+        let ongoingErrorMsgTimeoutID=-1,hideErrorTimeoutID=-1;
+        function showError(msg,permanent=false){
+            clearTimeout(hideErrorTimeoutID);
+            hideErrorTimeoutID=-1;
+            clearTimeout(ongoingErrorMsgTimeoutID);
+            ongoingErrorMsgTimeoutID=-1;
+            errorp.innerText=msg+'\n';
+            nojs.style.display="block";
+            setTimeout(()=>nojs.style.height=nojs.scrollHeight+"px",0);
+            if(!permanent){
+                let hideErrElm=document.createElement('button');
+                hideErrElm.innerText="Hide error (automatically in 20 seconds)";
+                hideErrElm.addEventListener("click",function(){
+                    hideError();
+                });
+                errorp.appendChild(hideErrElm);
+                ongoingErrorMsgTimeoutID=setTimeout(hideError,20000);
+            }
+        }
+        function hideError(){
+            clearTimeout(ongoingErrorMsgTimeoutID);
+            ongoingErrorMsgTimeoutID=-1;
+            nojs.style.height="0px";
+            hideErrorTimeoutID=setTimeout(()=>nojs.style.display="none",1100);
+        }
+        window.addEventListener('error',function(e){
+            showError(`Error occoured at ${e.filename} line ${e.lineno}:${e.colno}\n${e.message}`,true);
+            console.log(e);
+        });
+    </script>
     <script src="libwiinetcfgedit.js"></script>
     <script src="main.js"></script>
 </body>
