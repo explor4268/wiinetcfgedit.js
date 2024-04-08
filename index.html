@@ -77,20 +77,20 @@
         </div>
         <div class="general-opt opt">
             <h3>General</h3>
-            <label>Version: <input class="general-opt-input" id="f_version" type="number" min="0" max="4294967295"></label>
-            <label>Valid connections (header4): <input class="general-opt-input" id="f_header4" type="number" min="0" max="255"></label>
-            <label>Unknown (header5): <input class="general-opt-input" id="f_header5" type="number" min="0" max="255"></label>
-            <label>Link timeout seconds: <input class="general-opt-input" id="f_linktimeoutsec" type="number" min="0" max="255"></label>
+            <label>Version: <input class="general-opt-input int-input val-u32" id="f_version" type="number" min="0" max="4294967295"></label>
+            <label>Valid connections (header4): <input class="general-opt-input int-input val-u8" id="f_header4" type="number" min="0" max="255"></label>
+            <label>Unknown (header5): <input class="general-opt-input int-input val-u8" id="f_header5" type="number" min="0" max="255"></label>
+            <label>Link timeout seconds: <input class="general-opt-input int-input val-u8" id="f_linktimeoutsec" type="number" min="0" max="255"></label>
         </div>
         <div class="connection-opt opt">
             <h3><label class="conn-label">Connection <input id="f_conn" class="conn-inp" type="number" min="1" max="3" value="1"></label></h3>
             <div class="flags-root">
-                <label><strong>Connection selected:</strong> <input id="connselected" class="check conn-opt-input" type="checkbox"></label>
-                <label>Use PMTU Recovery: <input id="pmturec" class="check conn-opt-input" type="checkbox"></label>
-                <label><strong>Internet test passed:</strong> <input id="nettestpassed" class="check conn-opt-input" type="checkbox"></label>
-                <label>Use Proxy: <input id="useproxy" class="check conn-opt-input" type="checkbox"></label>
-                <label>Use PPPoE: <input id="pppoe" class="check conn-opt-input" type="checkbox"></label>
-                <label>Use DHCP for IP Address: <input id="dhcpenable" class="check conn-opt-input" type="checkbox"></label>
+                <label><strong>Connection selected:</strong> <input id="connselected" class="check conn-opt-input flags-input" type="checkbox"></label>
+                <label>Use PMTU Recovery: <input id="pmturec" class="check conn-opt-input flags-input" type="checkbox"></label>
+                <label><strong>Internet test passed:</strong> <input id="nettestpassed" class="check conn-opt-input flags-input" type="checkbox"></label>
+                <label>Use Proxy: <input id="useproxy" class="check conn-opt-input flags-input" type="checkbox"></label>
+                <label>Use PPPoE: <input id="pppoe" class="check conn-opt-input flags-input" type="checkbox"></label>
+                <label>Use DHCP for IP Address: <input id="dhcpenable" class="check conn-opt-input flags-input" type="checkbox"></label>
                 <label class="ipcontainer">
                     Manual IP Address:&nbsp;
                     <input class="ipfield" id="f_ipaddr1" type="text" value="0">.
@@ -112,7 +112,7 @@
                     <input class="ipfield" id="f_gipaddr3" type="text" value="0">.
                     <input class="ipfield" id="f_gipaddr4" type="text" value="0">
                 </label>
-                <label>Use DHCP for DNS: <input id="dnsdhcpenable" class="check conn-opt-input" type="checkbox"></label>
+                <label>Use DHCP for DNS: <input id="dnsdhcpenable" class="check conn-opt-input flags-input" type="checkbox"></label>
                 <label class="ipcontainer">
                     DNS IP Address 1:&nbsp;
                     <input class="ipfield" id="f_dipaddr1" type="text" value="0">.
@@ -127,9 +127,9 @@
                     <input class="ipfield" id="f_d2ipaddr3" type="text" value="0">.
                     <input class="ipfield" id="f_d2ipaddr4" type="text" value="0">
                 </label>
-                <label>Use Wired LAN Adapter: <input id="wiredenable" class="check conn-opt-input" type="checkbox"></label>
+                <label>Use Wired LAN Adapter: <input id="wiredenable" class="check conn-opt-input flags-input" type="checkbox"></label>
             </div>
-            <label>MTU (0 or 576-1500): <input class="conn-opt-input" id="f_mtu" type="text"></label>
+            <label>MTU (0 or 576-1500): <input class="conn-opt-input int-input val-u16" id="f_mtu" type="text"></label>
         </div>
         <button id="dlbtn">Download config.dat</button>
     </div>
@@ -149,6 +149,8 @@
         </p>
     </footer>
     <script>
+        const nojs=document.getElementById("nojs");
+        const errorp=document.getElementById("errorp");
         let ongoingErrorMsgTimeoutID=-1,hideErrorTimeoutID=-1;
         function showError(msg,permanent=false){
             clearTimeout(hideErrorTimeoutID);
@@ -161,9 +163,7 @@
             if(!permanent){
                 let hideErrElm=document.createElement('button');
                 hideErrElm.innerText="Hide error (automatically in 20 seconds)";
-                hideErrElm.addEventListener("click",function(){
-                    hideError();
-                });
+                hideErrElm.addEventListener("click",hideError);
                 errorp.appendChild(hideErrElm);
                 ongoingErrorMsgTimeoutID=setTimeout(hideError,20000);
             }

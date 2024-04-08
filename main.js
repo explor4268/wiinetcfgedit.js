@@ -31,7 +31,8 @@ document.querySelectorAll(".ipfield").forEach(e=>{
 });
 
 // MTU value validation. Valid values are 0 and between 576-1500
-f_mtu.addEventListener("input",function(evt){
+const fMtu=document.getElementById('f_mtu');
+fMtu.addEventListener("input",function(evt){
     let pint=parseInt(this.value)
     if(Number.isNaN(pint))pint=0;
     if(pint>1500)pint=1500;
@@ -49,24 +50,46 @@ let cfgclass;
 let curr_connection=1;
 
 let generaloptElements=document.querySelectorAll('input.general-opt-input');
+let connoptElements=document.querySelectorAll('input.conn-opt-input');
 
-function updateAllValues(){
-    fieldelements
+function elmToMappingID(elm){
+    let ret=elm.id;
+    if(elm.classList.contains("flags-input"))return `connection${curr_connection.toString()}_flags`;
+    if(ret.startsWith("f_"))ret=ret.substring(2);
+    if(elm.classList.contains("conn-opt-input"))ret='connection'+curr_connection.toString()+'_'+ret;
+    return ret;
 }
 
-f_conn.addEventListener("input",function(){
+function syncToValue(elm){
+    elm.value=cfgclass.getValue(elmToMappingID(elm));
+}
+
+function syncFromValue(elm){
+    cfgclass.setValue(elmToMappingID(elm));
+}
+
+function updateAllValues(){
+    // TODO if download clicked or change connection sync all values
+    // Implement specific inputs like strings (fill the rest with zeroes), string lengths, checkboxes, and IP Adresses.
+    // Note: (hacky approach) pre-generate all elements with specific or special cases with IP and String input and also the events.
+    // More TODO in README.md
+}
+
+const fConn=document.getElementById('f_conn');
+fConn.addEventListener("input",function(){
     curr_connection=parseInt(this.value);
     if(isNaN(curr_connection)||curr_connection<1||curr_connection>3)this.value=curr_connection=curr_connection>3?3:1;
     updateAllValues();
 });
 
+const fileUpl=document.getElementById('fileupl');
 function handleFileInput(evt){
-    if(fileupl.files.length!==1)return;
-    if(fileupl.files[0].size!==CFG_SIZE){
-        showError(`Your config file is not a valid config file. (size must be exactly ${CFG_SIZE} bytes, but your file is ${fileupl.files[0].size} bytes)`)
+    if(fileUpl.files.length!==1)return;
+    if(fileUpl.files[0].size!==CFG_SIZE){
+        showError(`Your config file is not a valid config file. (size must be exactly ${CFG_SIZE} bytes, but your file is ${fileUpl.files[0].size} bytes)`)
         return;
     }
-    fileupl.files[0].arrayBuffer().then(abuf=>cfgclass=new WiiNetCfg(abuf));
+    fileUpl.files[0].arrayBuffer().then(abuf=>cfgclass=new WiiNetCfg(abuf));
 }
 
 function createBlankCfg(){
@@ -75,8 +98,8 @@ function createBlankCfg(){
     }
 }
 
-fileupl.addEventListener("change",handleFileInput);
-createnewbtn.addEventListener("click",createBlankCfg);
+fileUpl.addEventListener("change",handleFileInput);
+document.getElementById("createnewbtn").addEventListener("click",createBlankCfg);
 
 function downloadConfig(){
     let blob=cfgclass.toBlob();
@@ -86,7 +109,7 @@ function downloadConfig(){
     dllink.click();
 }
 
-dlbtn.addEventListener("click",downloadConfig);
+document.getElementById("dlbtn").addEventListener("click",downloadConfig);
 
 // Hide JavaScript Warning with CSS transition effect.
 

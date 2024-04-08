@@ -7,9 +7,12 @@
 - [X] actual code
 - [X] mappings from properties to byte offsets
 - [X] **WiiNetCfg class**
-- [ ] fix some bugs and clean up some codes.
-- [ ] Editing with the GUI (implement Wi-Fi and Proxy options too)
-- [ ] Dark mode
+- [ ] fix some bugs and clean up some codes (work in progress)
+- [ ] Editing with the GUI (work in progress)
+- [ ] Implement Wi-Fi and Proxy options (work in progress)
+- [ ] Implement String (and string length), flags, integer, and IP Adresses inputs. (work in progress)
+- [ ] Split the CSS from index.html into style.css
+- [ ] Dark mode (with CSS)
 - [ ] Better UI/UX (maybe with the Wii Internet Settings style)
 - [ ] hex editing (advanced)
 
