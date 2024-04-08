@@ -43,9 +43,22 @@ f_mtu.addEventListener("input",function(evt){
     }
 });
 
-// Main
+// Main, handle the actual GUI code
 
 let cfgclass;
+let curr_connection=1;
+
+let generaloptElements=document.querySelectorAll('input.general-opt-input');
+
+function updateAllValues(){
+    fieldelements
+}
+
+f_conn.addEventListener("input",function(){
+    curr_connection=parseInt(this.value);
+    if(isNaN(curr_connection)||curr_connection<1||curr_connection>3)this.value=curr_connection=curr_connection>3?3:1;
+    updateAllValues();
+});
 
 function handleFileInput(evt){
     if(fileupl.files.length!==1)return;

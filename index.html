@@ -77,20 +77,20 @@
         </div>
         <div class="general-opt opt">
             <h3>General</h3>
-            <label>Version: <input id="f_version" type="number" min="0" max="4294967295"></label>
-            <label>Valid connections (header4): <input id="f_header4" type="number" min="0" max="255"></label>
-            <label>Unknown (header5): <input id="f_header5" type="number" min="0" max="255"></label>
-            <label>Link timeout seconds: <input id="f_linktimeoutsec" type="number" min="0" max="255"></label>
+            <label>Version: <input class="general-opt-input" id="f_version" type="number" min="0" max="4294967295"></label>
+            <label>Valid connections (header4): <input class="general-opt-input" id="f_header4" type="number" min="0" max="255"></label>
+            <label>Unknown (header5): <input class="general-opt-input" id="f_header5" type="number" min="0" max="255"></label>
+            <label>Link timeout seconds: <input class="general-opt-input" id="f_linktimeoutsec" type="number" min="0" max="255"></label>
         </div>
         <div class="connection-opt opt">
             <h3><label class="conn-label">Connection <input id="f_conn" class="conn-inp" type="number" min="1" max="3" value="1"></label></h3>
             <div class="flags-root">
-                <label><strong>Connection selected:</strong> <input id="connselected" class="check" type="checkbox"></label>
-                <label>Use PMTU Recovery: <input id="pmturec" class="check" type="checkbox"></label>
-                <label><strong>Internet test passed:</strong> <input id="nettestpassed" class="check" type="checkbox"></label>
-                <label>Use Proxy: <input id="useproxy" class="check" type="checkbox"></label>
-                <label>Use PPPoE: <input id="pppoe" class="check" type="checkbox"></label>
-                <label>Use DHCP for IP Address: <input id="dhcpenable" class="check" type="checkbox"></label>
+                <label><strong>Connection selected:</strong> <input id="connselected" class="check conn-opt-input" type="checkbox"></label>
+                <label>Use PMTU Recovery: <input id="pmturec" class="check conn-opt-input" type="checkbox"></label>
+                <label><strong>Internet test passed:</strong> <input id="nettestpassed" class="check conn-opt-input" type="checkbox"></label>
+                <label>Use Proxy: <input id="useproxy" class="check conn-opt-input" type="checkbox"></label>
+                <label>Use PPPoE: <input id="pppoe" class="check conn-opt-input" type="checkbox"></label>
+                <label>Use DHCP for IP Address: <input id="dhcpenable" class="check conn-opt-input" type="checkbox"></label>
                 <label class="ipcontainer">
                     Manual IP Address:&nbsp;
                     <input class="ipfield" id="f_ipaddr1" type="text" value="0">.
@@ -112,7 +112,7 @@
                     <input class="ipfield" id="f_gipaddr3" type="text" value="0">.
                     <input class="ipfield" id="f_gipaddr4" type="text" value="0">
                 </label>
-                <label>Use DHCP for DNS: <input id="dnsdhcpenable" class="check" type="checkbox"></label>
+                <label>Use DHCP for DNS: <input id="dnsdhcpenable" class="check conn-opt-input" type="checkbox"></label>
                 <label class="ipcontainer">
                     DNS IP Address 1:&nbsp;
                     <input class="ipfield" id="f_dipaddr1" type="text" value="0">.
@@ -127,9 +127,9 @@
                     <input class="ipfield" id="f_d2ipaddr3" type="text" value="0">.
                     <input class="ipfield" id="f_d2ipaddr4" type="text" value="0">
                 </label>
-                <label>Use Wired LAN Adapter: <input id="wiredenable" class="check" type="checkbox"></label>
+                <label>Use Wired LAN Adapter: <input id="wiredenable" class="check conn-opt-input" type="checkbox"></label>
             </div>
-            <label>MTU (0 or 576-1500): <input id="f_mtu" type="text"></label>
+            <label>MTU (0 or 576-1500): <input class="conn-opt-input" id="f_mtu" type="text"></label>
         </div>
         <button id="dlbtn">Download config.dat</button>
     </div>
@@ -145,7 +145,7 @@
         Credits: <a href="https://wiibrew.org/wiki//shared2/sys/net/02/config.dat">https://wiibrew.org/wiki//shared2/sys/net/02/config.dat</a><sup><a href="https://web.archive.org/web/20230604122507/https://wiibrew.org/wiki//shared2/sys/net/02/config.dat">[archived]</a></sup>
         </p>
         <p>
-        This is an unofficial tool. You are required to modify the Wii's system files (NAND). <strong>This tool is still in development</strong>. I am not responsible for any damages caused by this tool. <a href="LICENSE">Licensed under the MIT License</a>.
+        "Nintendo Wii" is a trademark of Nintendo. This is an unofficial tool not affiliated by Nintendo in any way. You are required to modify the Wii's system files (NAND). <strong>This tool is still in development</strong>. I am not responsible for any damages caused by this tool. <a href="https://github.com/explor4268/wiinetcfgedit.js/blob/gh-pages/LICENSE">Licensed under the MIT License</a>. <a href="https://github.com/explor4268/wiinetcfgedit.js">View this on GitHub.</a>
         </p>
     </footer>
     <script>

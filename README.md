@@ -26,3 +26,7 @@ Proper GUI is not implemented yet. In the meanwhile, you can edit with the devel
 
 - [https://wiibrew.org/wiki//shared2/sys/net/02/config.dat](https://wiibrew.org/wiki//shared2/sys/net/02/config.dat) for documentation.
 - The [https://github.com/Bazmoc/Wii-Network-Config-Editor](https://github.com/Bazmoc/Wii-Network-Config-Editor) homebrew app for the inspiration.
+
+---
+
+"Nintendo Wii" is a trademark of Nintendo. This is an unofficial tool not affiliated by Nintendo in any way.
