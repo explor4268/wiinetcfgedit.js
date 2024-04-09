@@ -70,7 +70,7 @@ function syncFromValue(elm){
 
 function updateAllValues(){
     // TODO if download clicked or change connection sync all values
-    // Implement specific inputs like strings (fill the rest with zeroes), string lengths, checkboxes, and IP Adresses.
+    // Implement specific inputs like strings (fill the rest with zeroes), string lengths, checkboxes, and IP Addresses.
     // Note: (hacky approach) pre-generate all elements with specific or special cases with IP and String input and also the events.
     // More TODO in README.md
 }

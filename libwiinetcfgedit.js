@@ -69,7 +69,7 @@ const mappings={
         ['padding',U8,2],
         ['padding',U8,1],
         ['keylen',U8,1], // length of key (see below) in bytes. 0x00 for WEP64 and WEP128.
-        ['unknown1',U8,1], // 0x00 or 0x01 toogled with a WPA-PSK (TKIP) and with a WEP entered with hex instead of ascii.
+        ['unknown1',U8,1], // 0x00 or 0x01 toggled with a WPA-PSK (TKIP) and with a WEP entered with hex instead of ASCII.
         ['padding',U8,1],
         ['key',U8,64], // Encryption key.  For WEP, key is stored 4 times (20 bytes for WEP64 and 52 bytes for WEP128) then padded with 0x00.
         ['padding',U8,236]
